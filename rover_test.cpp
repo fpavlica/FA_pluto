@@ -27,3 +27,22 @@ BOOST_AUTO_TEST_CASE(forward_test) {
 	expectEq(rov.getY(), 2);
 	expectEq(rov.getFacing(), Facing::North);
 }
+
+BOOST_AUTO_TEST_CASE(backward_test) {
+	Rover rov (0,2, Facing::North);
+
+	expectEq(rov.getX(), 0);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::North);
+
+	rov.move("B");
+	expectEq(rov.getX(), 0);
+	expectEq(rov.getY(), 1);
+	expectEq(rov.getFacing(), Facing::North);
+
+	rov.move("B");
+	expectEq(rov.getX(), 0);
+	expectEq(rov.getY(), 0);
+	expectEq(rov.getFacing(), Facing::North);
+
+}

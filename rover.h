@@ -24,9 +24,17 @@ public:
 		}
 	}
 
+	void moveB() {
+		if (facing == Facing::North) {
+			--y;
+		}
+	}
+
 	void move(const std::string & str) {
 		if (str == "F") {
 			moveF();
+		} else if (str == "B") {
+			moveB();
 		}
 	}
 };
