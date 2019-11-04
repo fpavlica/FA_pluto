@@ -6,11 +6,13 @@ class Rover{
 private:
 	int x,y;
 	Facing facing;
+	int gridSize;
 public:
-	Rover(int x, int y, Facing facing) {
+	Rover(int x, int y, Facing facing, int gridSize = 100) {
 		this->x = x;
 		this->y = y;
 		this->facing = facing;
+		this->gridSize = 100;
 	}
 
 	int getX() { return x; }
@@ -21,16 +23,16 @@ public:
 	void moveF() {
 		switch (facing) {
 			case Facing::North:
-				++y;
+				y = (y+1) % gridSize;
 				break;
 			case Facing::East:
-				++x;
+				x = (x+1) % gridSize;
 				break;
 			case Facing::South:
-				--y;
+				y = (y + gridSize - 1) % gridSize;
 				break;
 			case Facing::West:
-				--x;
+				x = (x + gridSize - 1) % gridSize;
 				break;
 			default:
 				throw "Somehow the rover managed to face none of N,E,S,W.";
@@ -40,16 +42,16 @@ public:
 	void moveB() {
 		switch (facing) {
 			case Facing::North:
-				--y;
+				y = (y + 100 - 1) % 100;
 				break;
 			case Facing::East:
-				--x;
+				x = (x + 100 - 1) % 100;
 				break;
 			case Facing::South:
-				++y;
+				y = (y+1) % 100;
 				break;
 			case Facing::West:
-				++x;
+				x = (x+1) % 100;
 				break;
 			default:
 				throw "Somehow the rover managed to face none of N,E,S,W.";
