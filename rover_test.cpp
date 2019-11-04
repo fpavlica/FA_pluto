@@ -212,3 +212,20 @@ BOOST_AUTO_TEST_CASE (wrap_back_test) {
 	expectEq(rov4.getY(), 10);
 	expectEq(rov4.getFacing(), Facing::East);
 }
+
+BOOST_AUTO_TEST_CASE (obstacle_test) {
+	std::vector <std::vector<bool>>  obstacles;
+
+
+	for (int i = 0; i < 10; ++i) {
+		std::vector<bool> row(10, false);
+		obstacles.push_back(row);
+	}
+	obstacles.at(2).at(1) = true; // obstacle at x=2, y =1;
+
+	Rover rov(0,0, Facing::North, obstacles);
+	rov.move("FRFFFFFFFF");
+	expectEq(rov.getX(), 1);
+	expectEq(rov.getY(), 1);
+	expectEq(rov.getFacing(), Facing::East);
+}

@@ -7,12 +7,25 @@ private:
 	int x,y;
 	Facing facing;
 	int gridSize;
+	std::vector<std::vector <bool> > grid;
 public:
-	Rover(int x, int y, Facing facing, int gridSize = 100) {
+	//initialize rover's lovation and rotation on a 100x100 grid with no obstacles
+	Rover(int x, int y, Facing facing) {
 		this->x = x;
 		this->y = y;
 		this->facing = facing;
-		this->gridSize = gridSize;
+		std::vector<bool> temprow(100, false);
+		this->grid = std::vector <std::vector<bool> > (100, temprow);
+		this->gridSize = this->grid.size();
+	}
+
+	//initialize rover's location and rotation, and the grid it is on
+	Rover(int x, int y, Facing facing, std::vector<std::vector<bool> > & grid) {
+		this->x = x;
+		this->y = y;
+		this->facing = facing;
+		this->grid = grid;
+		this->gridSize = grid.size();
 	}
 
 	int getX() { return x; }
@@ -21,40 +34,65 @@ public:
 
 
 	void moveF() {
+		//could be implemented without a switch statement if the rover's rotation
+		//was stored as a pair of ints: (x,y) as (0,1), (1,0), (0, -1), (-1, 0) for N,E,S,W resp.
+		//then just add those to the current location.
+		//this would make the code shorter but possibly less readable
+
+		int nextY = y, nextX = x;
 		switch (facing) {
 			case Facing::North:
-				y = (y+1) % gridSize;
+				nextY = (y+1) % gridSize;
 				break;
 			case Facing::East:
-				x = (x+1) % gridSize;
+				nextX = (x+1) % gridSize;
 				break;
 			case Facing::South:
-				y = (y + gridSize - 1) % gridSize;
+				nextY = (y + gridSize - 1) % gridSize;
 				break;
 			case Facing::West:
-				x = (x + gridSize - 1) % gridSize;
+				nextX = (x + gridSize - 1) % gridSize;
 				break;
 			default:
 				throw "Somehow the rover managed to face none of N,E,S,W.";
 		}
+		if (grid.at(nextX).at(nextY) == true) {
+			//next step would contain an obstacle
+			//do nothing
+		} else {
+			//otherwise, no obstacle found, move along
+			this->y = nextY;
+			this->x = nextX;	
+		}
 	}
 
 	void moveB() {
+
+		int nextY = y, nextX = x;
 		switch (facing) {
 			case Facing::North:
-				y = (y + 100 - 1) % 100;
+				nextY = (y + 100 - 1) % 100;
 				break;
 			case Facing::East:
-				x = (x + 100 - 1) % 100;
+				nextX = (x + 100 - 1) % 100;
 				break;
 			case Facing::South:
-				y = (y+1) % 100;
+				nextY = (y+1) % 100;
 				break;
 			case Facing::West:
-				x = (x+1) % 100;
+				nextX = (x+1) % 100;
 				break;
 			default:
 				throw "Somehow the rover managed to face none of N,E,S,W.";
+		}
+
+		if (grid.at(nextX).at(nextY) == true) {
+			//next step would contain an obstacle
+			//do nothing
+		} else {
+			//otherwise, no obstacle found, move along
+			this->y = nextY;
+			this->x = nextX;	
 		}
 	}
 
