@@ -86,3 +86,55 @@ BOOST_AUTO_TEST_CASE(backward_test) {
 	expectEq(rovW.getFacing(), Facing::West);
 
 }
+
+BOOST_AUTO_TEST_CASE (rotate_R_test) {
+	Rover rov(2,2, Facing::North);
+
+	rov.move("R");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::East);
+
+
+	rov.move("R");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::South);
+
+	rov.move("R");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::West);
+
+	rov.move("R");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::North);
+
+}
+
+BOOST_AUTO_TEST_CASE (rotate_L_test) {
+	Rover rov(2,2, Facing::North);
+
+	rov.move("L");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::West);
+
+
+	rov.move("L");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::South);
+
+	rov.move("L");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::East);
+
+	rov.move("L");
+	expectEq(rov.getX(), 2);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::North);
+
+}
