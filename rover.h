@@ -38,7 +38,6 @@ public:
 	}
 
 	void moveB() {
-
 		switch (facing) {
 			case Facing::North:
 				--y;
@@ -100,14 +99,28 @@ public:
 	}
 
 	void move(const std::string & str) {
-		if (str == "F") {
-			moveF();
-		} else if (str == "B") {
-			moveB();
-		} else if (str == "R") {
-			rotateR();
-		} else if (str == "L") {
-			rotateL();
+
+		for (const char &c : str) {
+			switch (c) {
+				case 'F':
+				case 'f':
+					moveF();
+					break;
+				case 'B':
+				case 'b':
+					moveB();
+					break;
+				case 'R':
+				case 'r':
+					rotateR();
+					break;
+				case 'L':
+				case 'l':
+					rotateL();
+					break;
+				default:
+					throw ("Invalid command: " + c);
+			}
 		}
 	}
 };

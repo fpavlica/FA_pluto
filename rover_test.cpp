@@ -138,3 +138,18 @@ BOOST_AUTO_TEST_CASE (rotate_L_test) {
 	expectEq(rov.getFacing(), Facing::North);
 
 }
+
+BOOST_AUTO_TEST_CASE(multi_commands_test) {
+	Rover rov(0,0, Facing::North);
+
+	rov.move("FFRF");
+	expectEq(rov.getX(), 1);
+	expectEq(rov.getY(), 2);
+	expectEq(rov.getFacing(), Facing::East);
+
+	Rover rov2(8,8, Facing::South);
+	rov2.move("BFLLLLFFBBLR");
+	expectEq(rov2.getX(), 8);
+	expectEq(rov2.getY(), 8);
+	expectEq(rov2.getFacing(), Facing::South);
+}
