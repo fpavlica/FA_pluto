@@ -12,7 +12,7 @@ public:
 		this->x = x;
 		this->y = y;
 		this->facing = facing;
-		this->gridSize = 100;
+		this->gridSize = gridSize;
 	}
 
 	int getX() { return x; }
