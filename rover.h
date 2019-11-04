@@ -19,30 +19,41 @@ public:
 
 
 	void moveF() {
-		if (facing == Facing::North) {
-			++y;
-		} else if (facing == Facing::East) {
-			++x;
-		} else if (facing == Facing::South) {
-			--y;
-		} else if (facing == Facing::West) {
-			--x;
-		} else {
-			throw "Somehow the rover managed to face none of N,E,S,W.";
+		switch (facing) {
+			case Facing::North:
+				++y;
+				break;
+			case Facing::East:
+				++x;
+				break;
+			case Facing::South:
+				--y;
+				break;
+			case Facing::West:
+				--x;
+				break;
+			default:
+				throw "Somehow the rover managed to face none of N,E,S,W.";
 		}
 	}
 
 	void moveB() {
-		if (facing == Facing::North) {
-			--y;
-		} else if (facing == Facing::East) {
-			--x;
-		} else if (facing == Facing::South) {
-			++y;
-		} else if (facing == Facing::West) {
-			++x;
-		} else {
-			throw "Somehow the rover managed to face none of N,E,S,W.";
+
+		switch (facing) {
+			case Facing::North:
+				--y;
+				break;
+			case Facing::East:
+				--x;
+				break;
+			case Facing::South:
+				++y;
+				break;
+			case Facing::West:
+				++x;
+				break;
+			default:
+				throw "Somehow the rover managed to face none of N,E,S,W.";
 		}
 	}
 
@@ -69,6 +80,7 @@ public:
 	}
 
 	void rotateL() {
+		// facing = (Facing) (((char)facing +4 -1) % 4);
 		switch (facing) {
 			case Facing::North:
 				facing = Facing::West;
