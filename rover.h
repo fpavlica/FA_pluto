@@ -91,6 +91,7 @@ public:
 		}
 	}
 
+	//might have been better to use a function pointer rather than a flag variable
 	void moveBF(bool forward) {
 
 		int nextY = y, nextX = x;
