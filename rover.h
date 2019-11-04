@@ -1,3 +1,4 @@
+#include <string>
 
 enum Facing {North, East, South, West};
 
@@ -15,4 +16,17 @@ public:
 	int getX() { return x; }
 	int getY() { return y; }
 	int getFacing() { return facing; }
+
+
+	void moveF() {
+		if (facing == Facing::North) {
+			++y;
+		}
+	}
+
+	void move(const std::string & str) {
+		if (str == "F") {
+			moveF();
+		}
+	}
 };
