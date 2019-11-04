@@ -21,12 +21,28 @@ public:
 	void moveF() {
 		if (facing == Facing::North) {
 			++y;
+		} else if (facing == Facing::East) {
+			++x;
+		} else if (facing == Facing::South) {
+			--y;
+		} else if (facing == Facing::West) {
+			--x;
+		} else {
+			throw "Somehow the rover managed to face none of N,E,S,W.";
 		}
 	}
 
 	void moveB() {
 		if (facing == Facing::North) {
 			--y;
+		} else if (facing == Facing::East) {
+			--x;
+		} else if (facing == Facing::South) {
+			++y;
+		} else if (facing == Facing::West) {
+			++x;
+		} else {
+			throw "Somehow the rover managed to face none of N,E,S,W.";
 		}
 	}
 
