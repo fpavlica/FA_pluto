@@ -224,7 +224,15 @@ BOOST_AUTO_TEST_CASE (obstacle_test) {
 	obstacles.at(2).at(1) = true; // obstacle at x=2, y =1;
 
 	Rover rov(0,0, Facing::North, obstacles);
-	rov.move("FRFFFFFFFF");
+	bool wasExc = false;
+	try {
+		rov.move("FRFFFFFFFF"); 
+	} catch (ObstacleException &oe) {
+		expectEq (oe.getX(), 2);
+		expectEq (oe.getY(), 1);
+		wasExc = true;
+	}
+	expect(wasExc);
 	expectEq(rov.getX(), 1);
 	expectEq(rov.getY(), 1);
 	expectEq(rov.getFacing(), Facing::East);

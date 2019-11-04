@@ -2,6 +2,21 @@
 
 enum Facing {North, East, South, West};
 
+class ObstacleException {
+private:
+	int x, y;
+public: 
+	ObstacleException(int x, int y) {
+		this->x = x;
+		this->y = y;
+	}
+	int getX() { return x; }
+	int getY() { return y; }
+	std::string getMesage() {
+		return "Obstacle encountered at (" + std::to_string(x) + "," + std::to_string(y) + ").";
+	}
+};
+
 class Rover{
 private:
 	int x,y;
@@ -33,13 +48,11 @@ public:
 	int getFacing() { return facing; }
 
 
-	void moveF() {
+	void getNextF(int &nextX, int &nextY) {
 		//could be implemented without a switch statement if the rover's rotation
 		//was stored as a pair of ints: (x,y) as (0,1), (1,0), (0, -1), (-1, 0) for N,E,S,W resp.
 		//then just add those to the current location.
 		//this would make the code shorter but possibly less readable
-
-		int nextY = y, nextX = x;
 		switch (facing) {
 			case Facing::North:
 				nextY = (y+1) % gridSize;
@@ -56,19 +69,10 @@ public:
 			default:
 				throw "Somehow the rover managed to face none of N,E,S,W.";
 		}
-		if (grid.at(nextX).at(nextY) == true) {
-			//next step would contain an obstacle
-			//do nothing
-		} else {
-			//otherwise, no obstacle found, move along
-			this->y = nextY;
-			this->x = nextX;	
-		}
-	}
+	}	
 
-	void moveB() {
-
-		int nextY = y, nextX = x;
+	//would probably be better to return a pair of ints rather than changing by reference
+	void getNextB(int &nextX, int &nextY) {
 		switch (facing) {
 			case Facing::North:
 				nextY = (y + 100 - 1) % 100;
@@ -85,10 +89,22 @@ public:
 			default:
 				throw "Somehow the rover managed to face none of N,E,S,W.";
 		}
+	}
+
+	void moveBF(bool forward) {
+
+		int nextY = y, nextX = x;
+
+		if (forward) {
+			getNextF(nextX, nextY);
+		} else {
+			getNextB (nextX, nextY);
+		}
 
 		if (grid.at(nextX).at(nextY) == true) {
 			//next step would contain an obstacle
-			//do nothing
+			throw ObstacleException(nextX, nextY);
+
 		} else {
 			//otherwise, no obstacle found, move along
 			this->y = nextY;
@@ -144,11 +160,11 @@ public:
 			switch (c) {
 				case 'F':
 				case 'f':
-					moveF();
+					moveBF(true);
 					break;
 				case 'B':
 				case 'b':
-					moveB();
+					moveBF(false);
 					break;
 				case 'R':
 				case 'r':
